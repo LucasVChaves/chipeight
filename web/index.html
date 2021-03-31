@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=VT323">
+     <link rel="stylesheet" href="stylesheet.css">
+     <title>Chipeight</title>
+</head>
+<body>
+     <div class="page">
+          <h2>CHIPeight</h2>
+
+          <p>A WebAssembly CHIP-8 emulator written in Rust. Just pick a ROM and hit the start</p>
+
+          <p>For WIPEOFF, the default ROM, press W to start the game, then Q / E to move the paddle.
+               Other ROMs may be buggy!</p>
+
+          <span class="label">ROM:</span>
+          <select id="roms"></select>
+          <button id="run">START</button>
+          <button id="step">STEP</button>
+          
+          <div class="screen">
+               <canvas id="canvas" width="64" height="32" style="transform: scale(8); transform-origin: top left"></canvas>
+          </div>
+          <div class="container">
+               <div class="memory"></div>
+               <div class="registers" id="r1"></div>
+               <div class="registers" id="r2"></div>
+          </div>
+
+     </div>
+</body>
+</html>
+
+<script src="chip8.js"></script>
+<script src="jquery-3.2.1.min.js"></script>

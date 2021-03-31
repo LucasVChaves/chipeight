@@ -1,8 +1,11 @@
+/*
+The WORST random number generator. Im sorry computer scientists and mathematicians...
+*/
 pub const CMWC_CYCLE: usize = 4096;
 const PHI: u32 = 0x9e3779b9;
 
 pub struct ComplementaryMultiplyWithCarryGen {
-     pub q: [u32, CMWC_CYCLE],
+     pub q: [u32; CMWC_CYCLE],
      pub c: u32,
      pub i: usize,
 }
@@ -23,7 +26,7 @@ impl ComplementaryMultiplyWithCarryGen {
           ComplementaryMultiplyWithCarryGen {
                q: q,
                c: 362436,
-               i: 4095.
+               i: 4095
           }
      }
 

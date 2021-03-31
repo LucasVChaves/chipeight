@@ -1,7 +1,7 @@
 /*
 My knowledge in WebAssembly is my the size of an electron (or smaller)
 */
-use cpu::Cpu
+use cpu::Cpu;
 use display::Display;
 use keypad::Keypad;
 use rand::{ComplementaryMultiplyWithCarryGen, CMWC_CYCLE};
@@ -18,7 +18,7 @@ static mut CPU: Cpu = Cpu {
           memory: [0; 2048]
      },
      keypad: Keypad {
-          keys: [false, 16]
+          keys: [false; 16]
      },
      stack: [0; 16],
      sp: 0,
@@ -66,9 +66,9 @@ pub fn key_up(i: u8) {
 }
 
 #[no_mangle]
-pub fn get_register_v() -> &'static [u8:16] {
+pub fn get_register_v() -> &'static [u8; 16] {
      unsafe{
-          CPU.v
+          &CPU.v
      }
 }
 

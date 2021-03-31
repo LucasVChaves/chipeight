@@ -6,8 +6,8 @@ Slower-than-my-brain refresh rate
 8-bit Run-over atari quality
 My IQ is bigger than the vMemory
 */
-const WIDTH: usize 32;
-const HEIGHT: usize 64;
+const WIDTH: usize = 32;
+const HEIGHT: usize = 64;
 
 pub struct Display {
      pub memory: [u8; 2048], 
@@ -32,7 +32,7 @@ impl Display {
      pub fn cls (&mut self) {
           for x in 0..WIDTH {
                for y in 0..HEIGHT{
-                    self.set_pixel(x, y, self);
+                    self.set_pixel(x, y, false);
                }
           }
      }
@@ -43,7 +43,7 @@ impl Display {
           for j in 0..rows {
                let row = sprite[j];
                for i in 0..8{
-                    let new_value == row >> (7 - i) & 0x01;
+                    let new_value = row >> (7 - i) & 0x01;
                     if new_value == 1 {
                          let xi = (x + i) % WIDTH;
                          let yj = (y + j) % HEIGHT;

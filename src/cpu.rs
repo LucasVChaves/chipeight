@@ -5,13 +5,13 @@ use rand::ComplementaryMultiplyWithCarryGen;
 pub struct Cpu {
 
     //Index register
-    pub i: u32,
+    pub i: u16,
     //Program counter 
     pub pc: u16,
     //Memory - 4KB
     pub memory: [u8; 4096],
     //Registers
-    pub v: [u8: 16],
+    pub v: [u8; 16],
     //Peripherals
     pub keypad: Keypad,
     pub display: Display,
@@ -20,16 +20,17 @@ pub struct Cpu {
     //Stack pointer
     pub sp: u8,
     //Delay timer
-    pub dt: u8
+    pub dt: u8,
+    //Random number generator. Works just like my brain! *note: it doesnt work*
+    pub rand: ComplementaryMultiplyWithCarryGen
 }
 
 fn read_word(memory: [u8; 4096], index: u16) -> u16{
     (memory[index as usize] as u16) << 8
-        | (memory[index(+1) as usize] as u16)
+        | (memory[(index + 1) as usize] as u16)
 }
 
 impl Cpu {
-
     pub fn new() -> Cpu {
         Cpu{
             i: 0,
@@ -77,7 +78,7 @@ impl Cpu {
         let y = ((opcode & 0x00F0) >> 4) as usize;
         let vx = self.v[x];
         let vy = self.v[y];
-        let nnn = opcode & 0x0FFF
+        let nnn = opcode & 0x0FFF;
         let kk = (opcode & 0x00FF) as u8;
         let n = (opcode & 0x00FF) as u8;
 

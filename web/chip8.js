@@ -102,6 +102,61 @@ const run = async () => {
           4096
      );
 
+     const displayMemory = new Uint8Array(
+          exports.memory.buffer,
+          exports.get_display(),
+          2048
+     );
+
+     const vMemory = new Uint8Array(
+          exports.memory.buffer,
+          exports.get_register_v(),
+          16
+     );
+
+     const canvas = document.getElementById("canvas");
+     const ctx = canvas.getContext("2d");
+     ctx.fillStyle = "black";
+     ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+     const updateDisplay = () => {
+          const imageData = ctx.createImageData(WIDTH, HEIGHT);
+          for (let i = 0; i < displayMemory.length; i++) {
+               imageData.data[i * 4] = displayMemory[i] === 1 ? 0x33 : 0;
+               imageData.data[i * 4 + 1] = displayMemory[i] === 1 ? 0xff : 0;
+               imageData.data[i * 4 + 2] = displayMemory[i] === 1 ? 0x66 : 0;
+               imageData.data[i * 4 + 3] = 255;
+          }
+          ctx.putImageData(imageData, 0, 0);
+     };
+
+     const dumpRegisters = () => {
+          $("#1").empty();
+          const vValues = Array(16);
+          for (let i = 0; i < vMemory.length; i++) {
+               $("#r1").append(`<div>V${i}: ${vMemory[i]}</div>`);
+          }
+          $("#r2").empty();
+          $("#r2").append(`<div>PC: ${exports.get_register_pc()}</div>`);
+          $("#r2").append(`<div>I: ${exports.get_register_i()}</div>`);
+     };
+
+     const dumpMemory = () => {
+          $(".memory").empty();
+          let address = 0x200;
+          while (address < 4096) {
+               const clazz = `addr_${address}`;
+               const haddress = "0x" + hex(address, 4);
+               $(".memory").append(
+                    `<div class='${clazz}'>${haddress} - ${dissassemble(
+                         programMemory,
+                         address
+                    )}</div>`
+               );
+               address += 2;
+          }
+     };
+
      const runloop = () => {
           for (var i = 0; i < 10; i++) {
                exports.execute_cycle();

@@ -157,14 +157,86 @@ const run = async () => {
           }
      };
 
-     const runloop = () => {
-          for (var i = 0; i < 10; i++) {
-               exports.execute_cycle();
+     const updateProgramCounter = () => {
+          $(`.memory > div`).removeClass("pc");
+          const pc = exports.get_register_pc();
+          const currentAddress = $(`.memory .addr_${pc}`).addClass("pc");
+          if (currentAddress[0]) {
+               const container = $(".memory");
+               container.scrollTop(
+                    currentAddress.offset().top - container.offset().top + container.scrollTop()
+               );
           }
-     }
-     exports.decrement_timers();
-     updateUI();
-     window.requestAnimationFrame(runloop);
-     //window.requestAnimationFrame(runloop);
+     };
 
-}
+     const updateUI = () => {
+          dumpRegisters();
+          updateDisplay();
+          updateProgramCounter();
+     };
+
+     const loadROM = rom => fetch(`roms/${rom}`)
+          .then(i => i.arrayBuffer())
+          .then(buffer => {
+               //Shove the selected ROM down memory's throat.
+               const rom = new DataView(buffer, 0, buffer.byteLength);
+               exports.reset();
+               for (i = 0; i < rom.byteLength; i++) {
+                    programMemory[0x200 + i] = rom.getUint8(i);
+               }
+               updateUI();
+               dumpMemory();
+          });
+
+     ROMS.forEach(rom => {
+          $("#roms").append(`<option value='${rom}'>${rom}</option>`);
+     });
+
+     document.getElementById("roms").addEventListener("change", e => {
+          loadROM(e.target.value);
+     });
+
+     document.getElementById("step").addEventListener("click", () => {
+          exports.execute_cycle();
+          updateUI();
+     });
+
+     let running = false;
+     const runloop = () => {
+          if (running) {
+               for (var i = 0; i < 10; i++) {
+                    exports.execute_cycle();
+               }
+               exports.decrement_timers();
+          }
+          updateUI();
+          window.requestAnimationFrame(runloop);
+     };
+
+     window.requestAnimationFrame(runloop);
+
+     const runButton = document.getElementById("run");
+     runButton.addEventListener("click", () => {
+          if (running) {
+               running = false;
+               runButton.innerHTML = "Start";
+          } else {
+               running = true;
+               runButton.innerHTML = "Stop";
+          }
+
+     });
+
+     document.addEventListener("keydown", Event => {
+          exports.key_down(translateKeys[Event.key]);
+     });
+
+     document.addEventListener("keyup", Event => {
+          exports.key_up(translateKeys[Event.key]);
+     });
+
+     $("#roms")[0].value = "WIPEOFF";
+     loadROM("WIPEOFF");
+};
+
+run();

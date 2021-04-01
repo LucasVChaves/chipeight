@@ -6,8 +6,8 @@ Slower-than-my-brain refresh rate
 8-bit Run-over atari quality
 My IQ is bigger than the vMemory
 */
-const WIDTH: usize = 32;
-const HEIGHT: usize = 64;
+const WIDTH: usize = 64;
+const HEIGHT: usize = 32;
 
 pub struct Display {
      pub memory: [u8; 2048], 

@@ -1,5 +1,5 @@
 const hex = (value, length = 2) => {
-     const padded = "0000" + value.ToString(16).toUpperCase();
+     const padded = "0000" + value.toString(16).toUpperCase();
      return padded.substr(padded.length - length);
 }
 
@@ -94,7 +94,7 @@ const run = async () => {
      const buffer = await res.arrayBuffer();
      const module = await WebAssembly.compile(buffer);
      const instance = await WebAssembly.instantiate(module);
-     const exports = instace.exports;
+     const exports = instance.exports;
 
      const programMemory = new Uint8Array(
           exports.memory.buffer,
@@ -148,7 +148,7 @@ const run = async () => {
                const clazz = `addr_${address}`;
                const haddress = "0x" + hex(address, 4);
                $(".memory").append(
-                    `<div class='${clazz}'>${haddress} - ${dissassemble(
+                    `<div class='${clazz}'>${haddress} - ${disassemble(
                          programMemory,
                          address
                     )}</div>`

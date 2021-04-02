@@ -8,6 +8,4 @@
 
 ## Building
 
-This emulator uses a *(not that much)* new version of the `wasm32-unknown-unknown` target wich has a complicated [setup process](https://www.hellorust.com/setup/wasm-target/). Once installed simply run the `build` script*.
-
-**The script is no implemented yet :P*
+This emulator uses a *(not that much)* new version of the `wasm32-unknown-unknown` target wich has a complicated [setup process](https://www.hellorust.com/setup/wasm-target/). Once installed simply run the `build.sh` script.

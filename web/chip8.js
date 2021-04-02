@@ -8,7 +8,9 @@ const inRange = (value, lower, upper) => value >= lower && value <= upper;
 const ROMS = [
      "15PUZZLE",
      "CONNECT4",
+     "IBM",
      "INVADERS",
+     "KALEID",
      "PONG",
      "TETRIS",
      "TICTAC",
@@ -227,12 +229,13 @@ const run = async () => {
 
      });
 
-     document.addEventListener("keydown", Event => {
-          exports.key_down(translateKeys[Event.key]);
+     //I know is deprecated, but i cant figure out how to do this.
+     document.addEventListener("keydown", event => {
+          exports.key_down(translateKeys[event.keyCode]);
      });
 
-     document.addEventListener("keyup", Event => {
-          exports.key_up(translateKeys[Event.key]);
+     document.addEventListener("keyup", event => {
+          exports.key_up(translateKeys[event.keyCode]);
      });
 
      $("#roms")[0].value = "WIPEOFF";

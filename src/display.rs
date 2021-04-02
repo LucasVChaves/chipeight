@@ -79,6 +79,20 @@ pub static FONT_SET: [u8; 80] = [
      0xF0, 0x80, 0xF0, 0x80, 0x80  // F
 ];
 
+#[cfg(test)]
+mod tests {
+  use super::Display;
+
+  #[test]
+  fn set_pixel() {
+    let mut display = Display::new();
+    
+    display.set_pixel(1, 1, true);
+
+    assert_eq!(true, display.get_pixel(1, 1));
+  }
+}
+
 #[test]
 fn cls() {
   let mut display = Display::new();

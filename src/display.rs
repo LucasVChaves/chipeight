@@ -6,6 +6,7 @@ Slower-than-my-brain refresh rate
 8-bit Run-over atari quality
 My IQ is bigger than the vMemory
 */
+
 const WIDTH: usize = 64;
 const HEIGHT: usize = 32;
 
